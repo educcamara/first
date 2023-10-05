@@ -1,24 +1,40 @@
 """
-    Arquivo Python com funções para manipulação de matrizes.
+    Arquivo Python com funcoes para manipulacao de matrizes.
 """
 
-print("Digite a primeira matriz em forma de lista de listas:")
-m1 = eval(input(" > "))
-print("Digite a segunda matriz em forma de lista de listas:")
-m2 = eval(input(" > "))
+def multiply_matrix(matrix1, matrix2):
+    """
+        Funcao que multiplica duas matrizes.
+        Retorna uma matriz.
+    """
+    if len(matrix1[0]) != len(matrix2):
+        return None
 
-matriz3 = []
+    matrix = []
 
-for i, row in enumerate(m1):
-    matriz3.append([])
-    for k, col in enumerate(m2[0]):
-        result = 0
-        for j, val in enumerate(m2):
-            result += row[j] * val[k]
-            # print(f'a{i+1}{j+1} b{j+1}{k+1}')
-        matriz3[i].append(result)
+    for i, row in enumerate(matrix1):
+        matrix.append([])
+        for k, _ in enumerate(matrix2[0]):
+            result = 0
+            for j, val in enumerate(matrix2):
+                result += row[j] * val[k]
+                # print(f'a{i+1}{j+1} b{j+1}{k+1}')
+            matrix[i].append(result)
 
-print("A multiplicação das duas matrizes resultou em:")
-print(matriz3)
+    return matrix
 
-# exemplo: [[1,2],[2,1]] [[1,0],[0,1]]
+
+def main():
+    """
+        Funcao principal.
+    """
+    print("Digite a primeira matriz em forma de lista de listas:")
+    matrix1 = eval(input(" > "))
+    print("Digite a segunda matriz em forma de lista de listas:")
+    matrix2 = eval(input(" > "))
+
+    print(multiply_matrix(matrix1, matrix2))
+    return 0
+
+
+main()
