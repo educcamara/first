@@ -1,3 +1,7 @@
+"""
+    Arquivo Python com funções para manipulação de matrizes.
+"""
+
 print('Digite a primeira matriz em forma de lista de listas:')
 m1 = eval(input(' > '))
 print('Digite a segunda matriz em forma de lista de listas:')
