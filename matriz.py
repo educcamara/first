@@ -2,10 +2,30 @@
     Arquivo Python com funcoes para manipulacao de matrizes.
 """
 
+
+def create_matrix() -> [[int]]:
+    """
+    Funcao que cria uma matriz.
+    Retorna uma matriz.
+    """
+    matrix = []
+    while True:
+        row = input(" > ")
+        if not row:
+            break
+        row = [int(x) for x in row.split()]
+        if matrix and len(row) != matrix[0]:
+            while len(row) != matrix[0]:
+                row.append(0)
+        matrix.append(row)
+
+    return matrix
+
+
 def multiply_matrix(matrix1, matrix2):
     """
-        Funcao que multiplica duas matrizes.
-        Retorna uma matriz.
+    Funcao que multiplica duas matrizes.
+    Retorna uma matriz.
     """
     if len(matrix1[0]) != len(matrix2):
         return None
@@ -26,14 +46,9 @@ def multiply_matrix(matrix1, matrix2):
 
 def main():
     """
-        Funcao principal.
+    Funcao principal.
     """
-    print("Digite a primeira matriz em forma de lista de listas:")
-    matrix1 = eval(input(" > "))
-    print("Digite a segunda matriz em forma de lista de listas:")
-    matrix2 = eval(input(" > "))
 
-    print(multiply_matrix(matrix1, matrix2))
     return 0
 
 
