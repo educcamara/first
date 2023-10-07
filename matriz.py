@@ -14,9 +14,12 @@ def create_matrix() -> [[int]]:
         if not row:
             break
         row = [int(x) for x in row.split()]
-        if matrix and len(row) != matrix[0]:
-            while len(row) != matrix[0]:
-                row.append(0)
+        if matrix:
+            if len(row) < len(matrix[0]):
+                row += [0] * (len(matrix[0]) - len(row))
+            elif len(row) > len(matrix[0]):
+                for i, _ in enumerate(matrix):
+                    matrix[i] += [0] * (len(row) - len(matrix[i]))
         matrix.append(row)
 
     return matrix
