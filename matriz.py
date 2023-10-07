@@ -25,6 +25,20 @@ def create_matrix() -> [[int]]:
     return matrix
 
 
+def transpose_matrix(matrix: [[int]]) -> [[int]]:
+    """
+    Funcao que retorna a transposta de uma matriz.
+    Retorna uma matriz.
+    """
+    t_matrix = []
+    for j , _ in enumerate(matrix[0]):
+        t_matrix.append([])
+        for i, _ in enumerate(matrix):
+            t_matrix[j].append(matrix[i][j])
+
+    return t_matrix
+
+
 def multiply_matrix(matrix1, matrix2):
     """
     Funcao que multiplica duas matrizes.
