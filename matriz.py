@@ -47,7 +47,7 @@ class Matrix:
         try:
             self.matrix[i][j] = float(value)
             self.determinant = (
-                self._calc_determinant
+                self._calc_determinant(self.matrix)
                 if self.size[0] == self.size[1]
                 else "Não é quadrada"
             )
