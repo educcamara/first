@@ -150,9 +150,20 @@ class Matrix:
                 det -= matrix[0][j] * self._calc_determinant(new_matrix)
 
         return det
-    
-        def _calc_transpose(self):
-            pass
+
+    @property
+    def transpose(self):
+        """
+        Funcao que retorna a transposta de uma matriz.
+        Retorna uma matriz.
+        """
+        t_matrix = []
+        for j, _ in enumerate(self.matrix[0]):
+            t_matrix.append([])
+            for i, _ in enumerate(self.matrix):
+                t_matrix[j].append(self.matrix[i][j])
+
+        return Matrix(t_matrix)
 
 
 def c_matrix() -> Matrix:
