@@ -3,23 +3,6 @@
 """
 
 
-def identity_matrix(n: int) -> [[int]]:
-    """
-    Funcao que cria uma matriz identidade de ordem n.
-    Retorna uma matriz.
-    """
-    matrix = []
-    for i in range(n):
-        matrix.append([])
-        for j in range(n):
-            if i != j:
-                matrix[i].append(0)
-            else:
-                matrix[i].append(1)
-
-    return matrix
-
-
 def transpose_matrix(matrix: [[float]]) -> [[float]]:
     """
     Funcao que retorna a transposta de uma matriz.
@@ -32,46 +15,6 @@ def transpose_matrix(matrix: [[float]]) -> [[float]]:
             t_matrix[j].append(matrix[i][j])
 
     return t_matrix
-
-
-def sum_matrix(matrix1: [[float]], matrix2: [[float]]) -> [[float]]:
-    """
-    Funcao que soma duas matrizes.
-    Retorna uma matriz.
-    """
-    if len(matrix1) != len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
-        return None
-
-    matrix = []
-
-    for i, _ in enumerate(matrix1):
-        matrix.append([])
-        for j, _ in enumerate(matrix1[0]):
-            elem1 = matrix1[i][j]
-            elem2 = matrix2[i][j]
-            matrix[i].append(elem1 + elem2)
-
-    return matrix
-
-
-def subtract_matrix(matrix1: [[float]], matrix2: [[float]]) -> [[float]]:
-    """
-    Funcao que soma duas matrizes.
-    Retorna uma matriz.
-    """
-    if len(matrix1) != len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
-        return None
-
-    matrix = []
-
-    for i, _ in enumerate(matrix1):
-        matrix.append([])
-        for j, _ in enumerate(matrix1[0]):
-            elem1 = matrix1[i][j]
-            elem2 = matrix2[i][j]
-            matrix[i].append(elem1 - elem2)
-
-    return matrix
 
 
 def multiply_matrix(matrix1: [[float]], matrix2: [[float]]) -> [[float]]:
@@ -146,16 +89,10 @@ class Matrix:
                 matrix.append([])
                 for j, _ in enumerate(self.matrix[0]):
                     matrix[i].append(self.matrix[i][j] + item[i, j])
+        else:
+            raise TypeError("Invalid type.")
 
         return Matrix(matrix)
-
-    def __mul__(self, item):
-        matrix = []
-        if isinstance(item, (int, float)):
-            for i, row in enumerate(self.matrix):
-                matrix.append([])
-                for elem in row:
-                    matrix[i].append(elem * item)
 
     def __sub__(self, item):
         matrix = []
@@ -173,6 +110,31 @@ class Matrix:
                 matrix.append([])
                 for j, _ in enumerate(self.matrix[0]):
                     matrix[i].append(self.matrix[i][j] - item[i, j])
+        else:
+            raise TypeError("Invalid type.")
+
+        return Matrix(matrix)
+
+    def __mul__(self, item):
+        matrix = []
+        if isinstance(item, (int, float)):
+            for i, row in enumerate(self.matrix):
+                matrix.append([])
+                for elem in row:
+                    matrix[i].append(elem * item)
+
+        elif isinstance(item, Matrix):
+            for i, row in enumerate(self.matrix):
+                matrix.append([])
+                for k, _ in enumerate(item.matrix[0]):
+                    result = 0
+                    for j, val in enumerate(item):
+                        result += row[j] * val[k]
+                        # print(f'a{i+1}{j+1} b{j+1}{k+1}')
+                    matrix[i].append(result)
+
+        else:
+            raise TypeError("Invalid type.")
 
         return Matrix(matrix)
 
@@ -203,7 +165,7 @@ class Matrix:
         return det
 
 
-def create_matrix() -> Matrix:
+def c_matrix() -> Matrix:
     """
     Funcao que cria uma matriz.
     Retorna uma matriz.
@@ -221,5 +183,22 @@ def create_matrix() -> Matrix:
                 for i, _ in enumerate(matrix):
                     matrix[i] += [0] * (len(row) - len(matrix[i]))
         matrix.append(row)
+
+    return Matrix(matrix)
+
+
+def id_matrix(n: int) -> Matrix:
+    """
+    Funcao que cria uma matriz identidade de ordem n.
+    Retorna uma matriz.
+    """
+    matrix = []
+    for i in range(n):
+        matrix.append([])
+        for j in range(n):
+            if i != j:
+                matrix[i].append(0)
+            else:
+                matrix[i].append(1)
 
     return Matrix(matrix)
