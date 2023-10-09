@@ -203,3 +203,7 @@ def id_matrix(n: int) -> Matrix:
                 matrix[i].append(1)
 
     return Matrix(matrix)
+
+
+m1 = Matrix([[1, 2], [3, 4]])
+mi = id_matrix(2)
