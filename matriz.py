@@ -41,6 +41,19 @@ class Matrix:
         except IndexError:
             return None
 
+    def __setitem__(self, coords: Tuple[int, int], value):
+        i = coords[0]
+        j = coords[1]
+        try:
+            self.matrix[i][j] = float(value)
+            self.determinant = (
+                self._calc_determinant
+                if self.size[0] == self.size[1]
+                else None
+            )
+        except IndexError:
+            pass
+
     def __repr__(self) -> str:
         text = ""
         for row in self.matrix:
@@ -137,7 +150,7 @@ class Matrix:
                 det -= matrix[0][j] * self._calc_determinant(new_matrix)
 
         return det
-
+    
         def _calc_transpose(self):
             pass
 
