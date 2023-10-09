@@ -49,7 +49,7 @@ class Matrix:
             self.determinant = (
                 self._calc_determinant
                 if self.size[0] == self.size[1]
-                else None
+                else "Não é quadrada"
             )
         except IndexError:
             pass
