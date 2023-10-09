@@ -17,28 +17,6 @@ def transpose_matrix(matrix: [[float]]) -> [[float]]:
     return t_matrix
 
 
-def multiply_matrix(matrix1: [[float]], matrix2: [[float]]) -> [[float]]:
-    """
-    Funcao que multiplica duas matrizes.
-    Retorna uma matriz.
-    """
-    if len(matrix1[0]) != len(matrix2):
-        return None
-
-    matrix = []
-
-    for i, row in enumerate(matrix1):
-        matrix.append([])
-        for k, _ in enumerate(matrix2[0]):
-            result = 0
-            for j, val in enumerate(matrix2):
-                result += row[j] * val[k]
-                # print(f'a{i+1}{j+1} b{j+1}{k+1}')
-            matrix[i].append(result)
-
-    return matrix
-
-
 class Matrix:
     """
     Classe Matrix
@@ -48,8 +26,12 @@ class Matrix:
 
     def __init__(self, matrix: [[float]]):
         self.matrix = matrix
-        self.determinant = self._calc_determinant(self.matrix)
         self.size = (len(matrix), len(matrix[0]))
+        self.determinant = (
+            self._calc_determinant(self.matrix)
+            if self.size[0] == self.size[1]
+            else "Não é quadrada"
+        )
 
     def __getitem__(self, coords: Tuple[int, int]):
         i = coords[0]
