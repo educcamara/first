@@ -3,20 +3,6 @@
 """
 
 
-def transpose_matrix(matrix: [[float]]) -> [[float]]:
-    """
-    Funcao que retorna a transposta de uma matriz.
-    Retorna uma matriz.
-    """
-    t_matrix = []
-    for j, _ in enumerate(matrix[0]):
-        t_matrix.append([])
-        for i, _ in enumerate(matrix):
-            t_matrix[j].append(matrix[i][j])
-
-    return t_matrix
-
-
 class Matrix:
     """
     Classe Matrix
