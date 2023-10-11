@@ -13,6 +13,8 @@ class Matrix:
     def __init__(self, matrix: [[float]]):
         self.matrix = matrix
         self.size = (len(matrix), len(matrix[0]))
+        self.row = self.size[0]
+        self.col = self.size[1]
         self.determinant = (
             self._calc_determinant(self.matrix)
             if self.size[0] == self.size[1]
@@ -21,12 +23,42 @@ class Matrix:
 
     # Recebe Elemento
     def __getitem__(self, coords: Tuple[int, int]):
-        i = coords[0]
-        j = coords[1]
-        try:
-            return self.matrix[i][j]
-        except IndexError:
-            return "Unreachable coordinates."
+        if isinstance(coords[0], int) and isinstance(coords[1], int):
+            i = coords[0]
+            j = coords[1]
+            try:
+                return self.matrix[i][j]
+            except IndexError:
+                return "Unreachable coordinates."
+
+        if isinstance(coords[0], int):
+            slc_i = slice(coords[0], coords[0] + 1, 1)
+            slc_j = coords[1]
+
+        elif isinstance(coords[1], int):
+            slc_i = coords[0]
+            slc_j = slice(coords[1], coords[1] + 1, 1)
+
+        else:
+            slc_i = coords[0]
+            slc_j = coords[1]
+
+        start_i, stop_i, step_i = slc_i.indices(self.row)
+        start_j, stop_j, step_j = slc_j.indices(self.col)
+
+        list_i = [x for x in range(start_i, stop_i, step_i)]
+        list_j = [y for y in range(start_j, stop_j, step_j)]
+
+        matrix = []
+        for i, m in zip(list_i, [x for x, _ in enumerate(list_i)]):
+            # print(f"m: {m}")
+            matrix.append([])
+            for j in list_j:
+                # print(f"{j}", end=" ")
+                matrix[m].append(self.matrix[i][j])
+            # print()
+
+        return Matrix(matrix)
 
     # Muda Elemento
     def __setitem__(self, coords: Tuple[int, int], value):
@@ -65,7 +97,7 @@ class Matrix:
             for i, _ in enumerate(self.matrix):
                 matrix.append([])
                 for j, _ in enumerate(self.matrix[0]):
-                    matrix[i].append(self.matrix[i][j] + item[i, j])
+                    matrix[i].append(self.matrix[i][j] + item.matrix[i][j])
         else:
             raise TypeError("Invalid type.")
 
@@ -87,7 +119,7 @@ class Matrix:
             for i, _ in enumerate(self.matrix):
                 matrix.append([])
                 for j, _ in enumerate(self.matrix[0]):
-                    matrix[i].append(self.matrix[i][j] - item[i, j])
+                    matrix[i].append(self.matrix[i][j] - item.matrix[i][j])
         else:
             raise TypeError("Invalid type.")
 
@@ -255,4 +287,5 @@ def id_matrix(n: int) -> Matrix:
 
 m1 = Matrix([[1, 2], [3, 4]])
 m3 = Matrix([[1, 2, 2], [2, 3, 3], [3, 4, 4]])
+m4 = Matrix([[1,2,3,4], [1,1,1,1], [3,4,4,5], [6,7,8,9]])
 mi = id_matrix(2)
