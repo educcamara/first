@@ -243,6 +243,8 @@ class Matrix:
         Propriedade que retorna a inversa de uma matriz.
         Retorna uma matriz.
         """
+        if not self.determinant:
+            return "This Matrix doesn't have inverse."
         return self.adjugate * (1 / self.determinant)
 
 
