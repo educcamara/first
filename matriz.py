@@ -16,17 +16,19 @@ class Matrix:
         self.determinant = (
             self._calc_determinant(self.matrix)
             if self.size[0] == self.size[1]
-            else "Não é quadrada"
+            else "Non-square matrix."
         )
 
+    # Recebe Elemento
     def __getitem__(self, coords: Tuple[int, int]):
         i = coords[0]
         j = coords[1]
         try:
             return self.matrix[i][j]
         except IndexError:
-            return None
+            return "Unreachable coordinates."
 
+    # Muda Elemento
     def __setitem__(self, coords: Tuple[int, int], value):
         i = coords[0]
         j = coords[1]
@@ -35,17 +37,19 @@ class Matrix:
             self.determinant = (
                 self._calc_determinant(self.matrix)
                 if self.size[0] == self.size[1]
-                else "Não é quadrada"
+                else "Non-square matrix."
             )
         except IndexError:
             pass
 
+    # Representação em String
     def __repr__(self) -> str:
         text = ""
         for row in self.matrix:
             text += f"{row}\n"
         return text
 
+    # Soma com Matriz
     def __add__(self, item):
         matrix = []
         if isinstance(item, (int, float)):
@@ -67,6 +71,7 @@ class Matrix:
 
         return Matrix(matrix)
 
+    # Subtração com Matriz
     def __sub__(self, item):
         matrix = []
         if isinstance(item, (int, float)):
@@ -88,6 +93,7 @@ class Matrix:
 
         return Matrix(matrix)
 
+    # Multiplicação com Matriz
     def __mul__(self, item):
         matrix = []
         if isinstance(item, (int, float)):
@@ -114,6 +120,7 @@ class Matrix:
     def __iter__(self):
         return iter(self.matrix)
 
+    # Cálculo do determinante
     def _calc_determinant(self, matrix) -> float:
         """
         Funcao que calcula o determinante de uma matriz identidade de ordem n.
@@ -137,10 +144,11 @@ class Matrix:
 
         return det
 
+    # Transposta da Matriz
     @property
     def transpose(self):
         """
-        Funcao que retorna a transposta de uma matriz.
+        Propriedade que retorna a transposta de uma matriz.
         Retorna uma matriz.
         """
         t_matrix = []
@@ -150,6 +158,60 @@ class Matrix:
                 t_matrix[j].append(self.matrix[i][j])
 
         return Matrix(t_matrix)
+
+    # Elemento Cofator
+    def cofactor(self, i: int, j: int):
+        """
+        Função que calcula o cofator de um elemento.
+        Retorna um número.
+        """
+        if i > self.size[0] or j > self.size[1]:
+            return "Unreachable coordinates."
+
+        minor = self._calc_minor(i, j)
+        # print(f"Minor[{i}, {j}]: \n{minor}")
+        factor = 1 if (i + j) % 2 == 0 else -1
+        cof = minor.determinant * factor
+        # print(f"Cofactor: {cof}")
+
+        return cof
+
+    def _calc_minor(self, i: int, j: int):
+        """
+        Função privada que retorna a matriz inferior ao elemento cofator.
+        Retorna uma matriz.
+        """
+        minor = []
+        for m, row in enumerate(self.matrix):
+            if m != i:
+                # quando o index m é diferente das coordenadas do elemento cofator:
+                minor.append([elem for n, elem in enumerate(row) if n != j])
+                # adicione à matriz inferior a linha de elementos exceto
+                # o elemento cujo index é igual ao do elemento cofator
+
+        return Matrix(minor)
+
+    @property
+    def adjugate(self):
+        """
+        Propriedade que retorna a matriz Adjunta.
+        Retorna uma matriz.
+        """
+        cofactor_matrix = []
+        for i, row in enumerate(self.matrix):
+            cofactor_row = [self.cofactor(i, j) for j, _ in enumerate(row)]
+            # print(cofactor_row)
+            cofactor_matrix.append(cofactor_row)
+
+        return Matrix(cofactor_matrix).transpose
+
+    @property
+    def inverse(self):
+        """
+        Propriedade que retorna a inversa de uma matriz.
+        Retorna uma matriz.
+        """
+        return self.adjugate * (1 / self.determinant)
 
 
 def c_matrix() -> Matrix:
@@ -192,4 +254,5 @@ def id_matrix(n: int) -> Matrix:
 
 
 m1 = Matrix([[1, 2], [3, 4]])
+m3 = Matrix([[1, 2, 2], [2, 3, 3], [3, 4, 4]])
 mi = id_matrix(2)
