@@ -21,6 +21,16 @@ class Matrix:
             else "Non-square matrix."
         )
 
+    def __eq__(self, other):
+        if isinstance(other, Matrix):
+            return self.matrix == other.matrix
+        return False
+
+    def __ne__(self, other):
+        if isinstance(other, Matrix):
+            return self.matrix != other.matrix
+        return False
+
     # Recebe Elemento
     def __getitem__(self, coords: Tuple[int, int]):
         if isinstance(coords[0], int) and isinstance(coords[1], int):
@@ -153,7 +163,7 @@ class Matrix:
         return iter(self.matrix)
 
     # Cálculo do determinante
-    def _calc_determinant(self, matrix) -> float:
+    def _calc_determinant(self, matrix):
         """
         Funcao que calcula o determinante de uma matriz identidade de ordem n.
         Retorna um numero.
@@ -166,7 +176,7 @@ class Matrix:
         det = 0
         for j, _ in enumerate(matrix[0]):
             new_matrix = [
-                matrix[i + 1][:j] + matrix[i + 1][j + 1 :]
+                matrix[i + 1][:j] + matrix[i + 1][j + 1:]
                 for i, _ in enumerate(matrix[1:])
             ]
             if j % 2 == 0:
@@ -211,14 +221,15 @@ class Matrix:
     def _calc_minor(self, i: int, j: int):
         """
         Função privada que retorna a matriz inferior ao elemento cofator.
-        Retorna uma matriz.
+
+        :return: Matrix
         """
         minor = []
         for m, row in enumerate(self.matrix):
             if m != i:
                 # quando o index m é diferente das coordenadas do elemento cofator:
                 minor.append([elem for n, elem in enumerate(row) if n != j])
-                # adicione à matriz inferior a linha de elementos exceto
+                # adicione à matriz inferior à linha de elementos exceto
                 # o elemento cujo index é igual ao do elemento cofator
 
         return Matrix(minor)
@@ -289,5 +300,5 @@ def id_matrix(n: int) -> Matrix:
 
 m1 = Matrix([[1, 2], [3, 4]])
 m3 = Matrix([[1, 2, 2], [2, 3, 3], [3, 4, 4]])
-m4 = Matrix([[1,2,3,4], [1,1,1,1], [3,4,4,5], [6,7,8,9]])
+m4 = Matrix([[1, 2, 3, 4], [1, 1, 1, 1], [3, 4, 4, 5], [6, 7, 8, 9]])
 mi = id_matrix(2)
