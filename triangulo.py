@@ -31,7 +31,3 @@ area = (c1**2 + c2**2 + c3**2)**(1/2)/2
 print(round(area, 3))
 
 # print(ponto_1, ponto_2, ponto_3)
-
-# Digite as coordenadas do ponto 1: -1, -1, -1
-# Digite as coordenadas do ponto 2: 1, 1, 1
-# Digite as coordenadas do ponto 3: 2, 3, 4
