@@ -148,7 +148,7 @@ class Matrix:
             for i, row in enumerate(self.matrix):
                 matrix.append([])
                 for k, _ in enumerate(item.matrix[0]):
-                    result = 0
+                    result: int = 0
                     for j, val in enumerate(item):
                         result += row[j] * val[k]
                         # print(f'a{i+1}{j+1} b{j+1}{k+1}')
@@ -262,7 +262,8 @@ class Matrix:
 def c_matrix() -> Matrix:
     """
     Funcao que cria uma matriz.
-    Retorna uma matriz.
+
+    :return: Matrix
     """
     matrix = []
     while True:
