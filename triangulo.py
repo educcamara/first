@@ -1,7 +1,21 @@
+
+"""
+This module calculates the area of a triangle given the coordinates of its vertices.
+"""
 from matriz import Matrix
 
 
 def get_str_coords(text: str) -> tuple:
+    """
+    Converts a string of coordinates in the format "(x, y, z)" to a tuple of integers.
+
+    Args:
+        text (str): A string of coordinates in the format "(x, y, z)".
+
+    Returns:
+        tuple: A tuple of integers representing the coordinates.
+
+    """
     text.replace('(', '')
     text.replace(')', '')
     text.replace(' ', '')
