@@ -4,6 +4,22 @@ Arquivo que utiliza a biblioteca `turtle` para criar simples funçōes em gráfi
 import turtle
 
 
+class MyTurtle(turtle.Turtle):
+    def plot_linear_func(self, a: float, b: float):
+        self.penup()
+        if a * 500 + b * 20 > 500:
+            self.goto((500 - b * 20) / a, 500)
+            self.pendown()
+            self.goto((-500 - b * 20) / a, -500)
+        else:
+
+            self.goto(500, (a * 500 + b * 20))
+            self.pendown()
+            self.goto(-500, (a * (-500) + b * 20))
+        self.penup()
+        self.goto(0, 0)
+
+
 def initialize_graph():
     """
     Inicializa o gráfico na janela turtle
@@ -14,7 +30,7 @@ def initialize_graph():
     scrn.bgcolor('black')
 
     # Configuração da Turtle
-    ttl = turtle.Turtle()
+    ttl = MyTurtle()
     ttl.shape('circle')
     ttl.shapesize(stretch_wid=0.25, stretch_len=0.25)
     ttl.hideturtle()
@@ -57,32 +73,11 @@ def initialize_graph():
     return scrn, ttl
 
 
-def plot_linear_func(ttl: turtle, a: float, b:float):
-    # ax + b = y
-    # ax + b*20 = 500
-    # x = (500 - b*20)/a
-    ttl.penup()
-    if a*500 + b*20 > 500:
-        ttl.goto((500 - b*20)/a, 500)
-        ttl.pendown()
-        ttl.goto((-500 - b*20)/a, -500)
-    else:
-        ttl.goto(500, (a*500 + b*20))
-        ttl.pendown()
-        ttl.goto(-500, (a*(-500) + b*20))
-    ttl.penup()
-    ttl.goto(0, 0)
-
-
 main, pen = initialize_graph()
 
-import code
-
-# Cria um ambiente interativo
-console = code.InteractiveConsole(locals=locals())
-
-# Executa o console interativo
-console.interact()
-
-
-main.mainloop()
+# # Cria um ambiente interativo
+# console = code.InteractiveConsole(locals=locals())
+#
+# # Executa o console interativo
+# console.interact()
+# main.mainloop()
